@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Tarefas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f4f4f9;
+    }
+
+    header {
+      background-color: #763C7F;
+      color: white;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 30px;
+      width: 1100px;
+      max-width: 625px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 19px;
+      color: #333;
+    }
+
+    .task-input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .task-input input, .task-input button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .task-input button {
+      background-color: #763C7F;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .task-input button:hover {
+      background-color: #45a049;
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .task-details {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .task-item button {
+      align-self: flex-start;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .task-item button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gerenciador de Tarefas</h1>
+  </header>
+  <div class="container">
+    <h1>Adicionar Nova Tarefa</h1>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Digite sua tarefa aqui">
+      <input type="date" id="taskDate" placeholder="Data">
+      <input type="text" id="taskLocation" placeholder="Local (opcional)">
+      <button onclick="addTask()">Adicionar</button>
+    </div>
+    <ul class="task-list" id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskDate = document.getElementById('taskDate');
+      const taskLocation = document.getElementById('taskLocation');
+      const taskList = document.getElementById('taskList');
+
+      if (taskInput.value.trim() === '') {
+        alert('Por favor, digite uma tarefa.');
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.className = 'task-item';
+
+      // Nome da tarefa
+      const taskName = document.createElement('span');
+      taskName.textContent = taskInput.value;
+
+      // Detalhes (data e local)
+      const taskDetails = document.createElement('div');
+      taskDetails.className = 'task-details';
+      const date = taskDate.value ? `Data: ${taskDate.value}` : '';
+      const location = taskLocation.value ? `, Local: ${taskLocation.value}` : '';
+      taskDetails.textContent = `${date}${location}`;
+
+      // Botão de remover
+      const button = document.createElement('button');
+      button.textContent = 'Remover';
+      button.onclick = function () {
+        taskList.removeChild(li);
+      };
+
+      // Adicionar os elementos ao item da lista
+      li.appendChild(taskName);
+      li.appendChild(taskDetails);
+      li.appendChild(button);
+      taskList.appendChild(li);
+
+      // Limpar os campos de entrada
+      taskInput.value = '';
+      taskDate.value = '';
+      taskLocation.value = '';
+    }
+  </script>
+</body>
+</html>
